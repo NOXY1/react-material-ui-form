@@ -4,9 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import Form from "./Form";
 
-
 class App extends Component {
-
   state = {
     fields: {}
   };
