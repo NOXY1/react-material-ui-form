@@ -8,15 +8,15 @@ export default class Form extends React.Component {
 		password: ''
 	};
 
-	handleChangeInput = event => {
-		this.props.onChange({[event.target.name]: event.target.value});
+	handleChangeInput = e => {
+		this.props.onChange({[e.target.name]: e.target.value});
 		this.setState({
-			[event.target.name]: event.target.value
+			[e.target.name]: e.target.value
 		});
 	};
 
-	handleSubmit = (event) => {
-		event.preventDefault();
+	handleSubmit = e => {
+		e.preventDefault();
 		alert('Form submited');
 	} 
 
@@ -26,23 +26,23 @@ export default class Form extends React.Component {
 				<TextField 
 					name='login'
 					hintText='Login'
-					floatingfLabelText='Login'
+					floatingLabelText='Login'
 					value={this.state.login}
 					floatingLabelFixed
-					onChange={event => this.handleChangeInput(event)}
+					onChange={e => this.handleChangeInput(e)}
 				/>
 				<br />
 				<TextField 
 					name='password'
 					hintText='Password'
-					floatingfLabelText='Password'
+					floatingLabelText='Password'
 					value={this.state.password}
-					onChange={event => this.handleChangeInput(event)}
+					onChange={e => this.handleChangeInput(e)}
 					type='password'
 					floatingLabelFixed
 				/>
 				<br />
-				<RaisedButton label='Submit' onClick={this.handleSubmit.bind(this)} primary />
+				<RaisedButton label='Submit' onClick={e => this.handleSubmit(e)} primary />
 			</form>
 			
 		);
