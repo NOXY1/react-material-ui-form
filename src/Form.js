@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 export default class Form extends React.Component {
 	state = {
@@ -25,24 +25,30 @@ export default class Form extends React.Component {
 			<form>
 				<TextField 
 					name='login'
-					hintText='Login'
-					floatingLabelText='Login'
+					label='Login'
 					value={this.state.login}
-					floatingLabelFixed
 					onChange={e => this.handleChangeInput(e)}
+					margin="normal"
+					style={{marginLeft: 10}}
 				/>
 				<br />
 				<TextField 
 					name='password'
-					hintText='Password'
-					floatingLabelText='Password'
+					label='Password'
 					value={this.state.password}
 					onChange={e => this.handleChangeInput(e)}
+					margin="normal"
 					type='password'
-					floatingLabelFixed
+					style={{marginLeft: 10}}
 				/>
 				<br />
-				<RaisedButton label='Submit' onClick={e => this.handleSubmit(e)} primary />
+				<Button variant='contained'
+				label='Submit' 
+				onClick={e => this.handleSubmit(e)} 
+				color="primary"
+				style={{margin: 10}}>
+					Submit
+				</Button>
 			</form>
 			
 		);
