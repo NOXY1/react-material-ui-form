@@ -1,4 +1,4 @@
-export function logIn(login, password) {
+export function logIn({login, password}) {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			if(login && password) {
@@ -8,9 +8,7 @@ export function logIn(login, password) {
 			}
 		}, 1000);
 				
-	})
-	.then(result => alert(result))
-	.catch(error => alert(error));;
+	});
 };
 
-// 
+ 

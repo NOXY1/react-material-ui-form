@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {logIn} from './services/userServise';
+import { logIn } from './services/userService';
 
 
 export default class Form extends React.Component {
@@ -16,8 +16,11 @@ export default class Form extends React.Component {
 	};
 
 	handleSubmit = e => {
+		const {login, password} = this.state;
 		e.preventDefault();
-		logIn(this.state.login, this.state.password);
+		logIn({login, password})
+								.then(result => alert(result))
+								.catch(error => alert(error));
 	} 
 
 	render() {
