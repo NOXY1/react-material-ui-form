@@ -1,6 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {logIn} from './services/userServise';
+
 
 export default class Form extends React.Component {
 	state = {
@@ -10,14 +12,12 @@ export default class Form extends React.Component {
 
 	handleChangeInput = e => {
 		this.props.onChange({[e.target.name]: e.target.value});
-		this.setState({
-			[e.target.name]: e.target.value
-		});
+		this.setState({[e.target.name]: e.target.value});
 	};
 
 	handleSubmit = e => {
 		e.preventDefault();
-		alert('Form submited');
+		logIn(this.state.login, this.state.password);
 	} 
 
 	render() {
