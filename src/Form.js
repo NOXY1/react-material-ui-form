@@ -7,7 +7,9 @@ import { logIn } from './services/userService';
 export default class Form extends React.Component {
 	state = {
 		login: '',
-		password: ''
+		password: '',
+		notification: '',
+		style: ''
 	};
 
 	handleChangeInput = e => {
@@ -16,43 +18,53 @@ export default class Form extends React.Component {
 	};
 
 	handleSubmit = e => {
-		const {login, password} = this.state;
 		e.preventDefault();
+		const {login, password} = this.state;
 		logIn({login, password})
-								.then(result => alert(result))
-								.catch(error => alert(error));
+								.then(result => {
+									console.log(result);
+									this.setState({notification: result, style: 'success' });
+								})
+								.catch(error => {
+									console.log(error);
+									this.setState({notification: error, style: 'error' });
+								});
 	} 
 
 	render() {
 		return(
-			<form>
-				<TextField 
-					name='login'
-					label='Login'
-					value={this.state.login}
-					onChange={e => this.handleChangeInput(e)}
-					margin="normal"
-					style={{marginLeft: 10}}
-				/>
-				<br />
-				<TextField 
-					name='password'
-					label='Password'
-					value={this.state.password}
-					onChange={e => this.handleChangeInput(e)}
-					margin="normal"
-					type='password'
-					style={{marginLeft: 10}}
-				/>
-				<br />
-				<Button variant='contained'
-				label='Submit' 
-				onClick={e => this.handleSubmit(e)} 
-				color="primary"
-				style={{margin: 10}}>
-					Submit
-				</Button>
-			</form>
+			<React.Fragment>
+				<p className={this.state.style}>{this.state.notification}</p>
+				<form>
+					<TextField 
+						name='login'
+						label='Login'
+						value={this.state.login}
+						onChange={e => this.handleChangeInput(e)}
+						margin="normal"
+						style={{marginLeft: 10}}
+					/>
+					<br />
+					<TextField 
+						name='password'
+						label='Password'
+						value={this.state.password}
+						onChange={e => this.handleChangeInput(e)}
+						margin="normal"
+						type='password'
+						style={{marginLeft: 10}}
+					/>
+					<br />
+					<Button variant='contained'
+							label='Submit' 
+							onClick={e => this.handleSubmit(e)} 
+							color="primary"
+							style={{margin: 10}}>
+						Submit
+					</Button>
+				</form>	
+			</React.Fragment>
+			
 			
 		);
 	}

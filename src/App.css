@@ -1,0 +1,20 @@
+.success {
+	color: #0b6d06;
+	height: 50px;
+	background: rgb(35, 196, 17, .3) ;
+	text-align: center;
+	border: 1px solid #0b6d06;
+	margin: 15px;
+	border-radius: 3px;
+	line-height: 50px;
+}
+.error {
+	color: #ffc300;
+	height: 50px;
+	background: rgb(255, 195, 0, .3) ;
+	text-align: center;
+	border: 1px solid #ffc300;
+	margin: 15px;
+	border-radius: 3px;
+	line-height: 50px;
+}

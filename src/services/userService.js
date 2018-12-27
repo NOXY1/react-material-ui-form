@@ -2,9 +2,9 @@ export function logIn({login, password}) {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			if(login && password) {
-				resolve("You are successfully logged in")
+				resolve('You have been successfully logged in');
 			} else {
-				reject("Fields are empty")
+				reject('Sorry, something went wrong');
 			}
 		}, 1000);
 				
