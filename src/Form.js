@@ -9,7 +9,7 @@ export default class Form extends React.Component {
 		login: '',
 		password: '',
 		notification: '',
-		style: ''
+		notificationType: ''
 	};
 
 	handleChangeInput = e => {
@@ -19,22 +19,20 @@ export default class Form extends React.Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const {login, password} = this.state;
-		logIn({login, password})
+		const { login, password } = this.state;
+		logIn({ login, password })
 								.then(result => {
-									console.log(result);
-									this.setState({notification: result, style: 'success' });
+									this.setState({notification: result, notificationType: 'notification success' });
 								})
 								.catch(error => {
-									console.log(error);
-									this.setState({notification: error, style: 'error' });
+									this.setState({notification: error, notificationType: 'notification error' });
 								});
 	} 
 
 	render() {
 		return(
 			<React.Fragment>
-				<p className={this.state.style}>{this.state.notification}</p>
+				<p className={this.state.notificationType}>{this.state.notification}</p>
 				<form>
 					<TextField 
 						name='login'

@@ -1,20 +1,19 @@
-.success {
-	color: #0b6d06;
+.notification {
 	height: 50px;
-	background: rgb(35, 196, 17, .3) ;
 	text-align: center;
-	border: 1px solid #0b6d06;
-	margin: 15px;
 	border-radius: 3px;
 	line-height: 50px;
+	margin: 15px;
 }
-.error {
+
+.notification.success {
+	color: #0b6d06;
+	background: rgb(35, 196, 17, .3) ;
+	border: 1px solid #0b6d06;
+}
+
+.notification.error {
 	color: #ffc300;
-	height: 50px;
 	background: rgb(255, 195, 0, .3) ;
-	text-align: center;
 	border: 1px solid #ffc300;
-	margin: 15px;
-	border-radius: 3px;
-	line-height: 50px;
 }
