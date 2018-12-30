@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { logIn } from './services/userService';
+import { hideNotification } from './services/userService';
 
 
 export default class Form extends React.Component {
@@ -27,7 +28,12 @@ export default class Form extends React.Component {
 								.catch(error => {
 									this.setState({notification: error, notificationType: 'notification error' });
 								});
-	} 
+		setTimeout(this.hideNotification, 5000);
+	}
+
+	hideNotification = () => {
+		this.setState({notification: null, notificationType: null});
+	}
 
 	render() {
 		return(
