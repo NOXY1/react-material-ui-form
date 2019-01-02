@@ -1,4 +1,5 @@
-let user = {
-	name: 'NOXY',
-	password: 123
-}
+export const user = {
+	login: 'NOXY',
+	password: '123'
+};
+ 

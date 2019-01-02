@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { logIn } from './services/userService';
-import { hideNotification } from './services/userService';
 
 
 export default class Form extends React.Component {
@@ -37,7 +36,7 @@ export default class Form extends React.Component {
 
 	render() {
 		return(
-			<React.Fragment>
+			<Fragment>
 				<p className={this.state.notificationType}>{this.state.notification}</p>
 				<form>
 					<TextField 
@@ -67,7 +66,7 @@ export default class Form extends React.Component {
 						Submit
 					</Button>
 				</form>	
-			</React.Fragment>
+			</Fragment>
 			
 			
 		);
