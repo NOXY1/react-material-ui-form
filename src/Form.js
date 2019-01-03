@@ -62,7 +62,8 @@ export default class Form extends React.Component {
 							label='Submit' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
-							style={{margin: 10}}>
+							style={{margin: 10}}
+							disabled={!this.state.login || !this.state.password}>
 						Submit
 					</Button>
 				</form>	
