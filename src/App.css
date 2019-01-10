@@ -8,12 +8,18 @@
 
 .notification.success {
 	color: #0b6d06;
-	background: rgb(35, 196, 17, .3) ;
+	background: rgb(35, 196, 17, .3);
 	border: 1px solid #0b6d06;
 }
 
 .notification.error {
 	color: #ffc300;
-	background: rgb(255, 195, 0, .3) ;
+	background: rgb(255, 195, 0, .3);
 	border: 1px solid #ffc300;
+}
+
+.home {
+	text-align: center;
+	font-size:  40px;
+	background-color: rgba(0, 221, 59, .5);
 }
