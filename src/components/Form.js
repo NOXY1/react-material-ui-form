@@ -1,24 +1,23 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { logIn } from '../services/userService';
 import { Redirect } from 'react-router-dom';
+import '../App.css';
 
 
-export default class Form extends React.Component {
+export default class Form extends Component {
 	state = {
 		login: '',
 		password: '',
 		notification: '',
 		notificationType: '',
-		disabledLoginButton: true,
 		redirect: false
 	}
 
 	handleChangeInput = e => {
 		this.props.onChange({[e.target.name]: e.target.value});
 		this.setState({[e.target.name]: e.target.value});
-		this.setLoginButtonState();
 	}
 
 	handleSubmit = e => {
@@ -34,23 +33,22 @@ export default class Form extends React.Component {
 								.catch(error => {
 									this.setState({notification: error, notificationType: 'notification error' });
 								});
-		setTimeout(this.hideNotification, 5000);
-	}
 
-	hideNotification = () => {
-		this.setState({notification: null, notificationType: null});
-	}
+		this.showNotification = (notification) => {
+			this.setState({notification});
 
-	setLoginButtonState = () => {
-		if(this.state.login && this.state.password) {
-			this.setState({disabledLoginButton: false});
-		} else {
-			this.setState({disabledLoginButton: true});		
+			setTimeout(() => {
+				this.setState({notification: null})
+			});
 		}
 	}
 
+	
+
 	render() {
-		
+		const { login, password } = this.state;
+		const isLoginBtnActive = !!(login && password);
+
 		if(this.state.redirect) {
 			return (<Redirect to={'/home'} />)
 		}
@@ -58,14 +56,13 @@ export default class Form extends React.Component {
 		return(
 			<Fragment>
 				<p className={this.state.notificationType}>{this.state.notification}</p>
-				<form>
+				<form className='ml'>
 					<TextField 
 						name='login'
 						label='Login'
 						value={this.state.login}
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
-						style={{marginLeft: 10}}
 					/>
 					<br />
 					<TextField 
@@ -75,15 +72,13 @@ export default class Form extends React.Component {
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 						type='password'
-						style={{marginLeft: 10}}
 					/>
 					<br />
 					<Button variant='contained'
 							label='Submit' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
-							style={{margin: 10}}
-							disabled={this.state.disabledLoginButton}>
+							disabled={!isLoginBtnActive}>
 						Submit
 					</Button>
 				</form>	
