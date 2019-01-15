@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { logIn } from '../services/userService';
+import { signUp } from '../services/userService';
 import { Redirect } from 'react-router-dom';
 import '../App.css';
 
@@ -14,6 +14,8 @@ export default class SignUp extends Component {
 		lastName: '',
 		email: '',
 		birthday: '',
+		notification: '',
+    	notificationType: '',
 		redirect: false,
 	}
 
@@ -23,39 +25,42 @@ export default class SignUp extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { login, password } = this.state;
-		logIn({ login, password })
+		const { firstName, lastName, email, birthday } = this.state;
+		signUp({ firstName, lastName, email, birthday })
 								.then(result => {
-									this.setState({notification: result, notificationType: 'notification success' });
 									if(result) {
-										this.setState({redirect: true});
+										this.setState({ redirect: true });
 									}
 								})
 								.catch(error => {
-									this.setState({notification: error, notificationType: 'notification error' });
+									this.showNotification(error, 'notification error');
+									console.log(error)
 								});
-		setTimeout(this.hideNotification, 5000);
 	}
 
-	hideNotification = () => {
-		this.setState({notification: null, notificationType: null});
-	}
+	showNotification = (notification, notificationType, time = 5000) => {
+	    this.setState({ notification: notification, notificationType: notificationType });
+	    setTimeout(() => {
+	      this.setState({ notification: null, notificationType: null });
+	    }, time);
+  	}	
 
 	render() {
-		const { firstName, lastName, email, birthday } = this.state;
+		const { firstName, lastName, email, birthday, notification, notificationType } = this.state;
 		const isSignInBtnActive = !!(firstName && lastName && email && birthday);
 		
 		if(this.state.redirect) {
-			return (<Redirect to={'/home'} />)
+			return (<Redirect to={ '/home' } />)
 		}
 
 		return(
 			<Fragment>
+			{!!notification && <p className={ notificationType }>{ notification }</p>}
 				<form className='ml'>
 					<TextField 
 						name='firstName'
 						label='Name'
-						value={this.state.firstName}
+						value={ firstName }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
@@ -63,7 +68,7 @@ export default class SignUp extends Component {
 					<TextField 
 						name='lastName'
 						label='Surname'
-						value={this.state.lastName}
+						value={ lastName }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
@@ -71,7 +76,7 @@ export default class SignUp extends Component {
 					<TextField 
 						name='email'
 						label='Email'
-						value={this.state.email}
+						value={ email }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
@@ -79,7 +84,7 @@ export default class SignUp extends Component {
 					<TextField 
 						name='birthday'
 						label='Birthday'
-						value={this.state.birthday}
+						value={ birthday }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
@@ -87,7 +92,7 @@ export default class SignUp extends Component {
 					<FormControlLabel
 			          control={
 			            <Checkbox
-			              checked={this.state.checkedB}
+			              checked={ this.state.checkedB }
 			              value="checkedB"
 			              color="primary"
 			            />
@@ -99,7 +104,8 @@ export default class SignUp extends Component {
 							label='Sign Up' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
-							disabled={!isSignInBtnActive}>
+							disabled = { !isSignInBtnActive }
+							>
 						Sign In
 					</Button>
 				</form>	

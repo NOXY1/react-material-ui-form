@@ -1,14 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import '../App.css';
 
-
-const Home = () => {
-	return (
-		<Fragment>
-			<h1 className='home'>Home</h1>
-		</Fragment>	
-	);
-}
-
+const Home = () => (<h1 className='home'>Home</h1>);
 
 export default Home;

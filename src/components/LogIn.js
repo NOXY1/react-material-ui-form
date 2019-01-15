@@ -24,48 +24,38 @@ export default class Form extends Component {
     const { login, password } = this.state;
     logIn({ login, password })
                 .then(result => {
-                  // this.showNotification(result, 'notification success');
-                  // this.setState({notification: result, notificationType: 'notification success' });
                   if(result) {
-                    this.setState({redirect: true});
+                    this.setState({ redirect: true });
                   }
                 })
                 .catch(error => {
                   this.showNotification(error, 'notification error');
-                  // this.setState({notification: error, notificationType: 'notification error' });
                 });
-
-    // setTimeout(this.hideNotification, 5000);
-
   }
 
   showNotification = (notification, notificationType, time = 5000) => {
-    this.setState({notification: notification, notificationType: notificationType});
+    this.setState({ notification, notificationType });
     setTimeout(() => {
-      this.setState({notification: null, notificationType: null});
+      this.setState({ notification: null, notificationType: null });
     }, time);
   }
-
-  // hideNotification = () => {
-  //   this.setState({notification: null, notificationType: null});
-  // }
 
   render() {
     const { login, password, notification, notificationType } = this.state;
     const isLoginBtnActive = !!(login && password);
 
     if(this.state.redirect) {
-      return (<Redirect to={'/home'} />)
+      return (<Redirect to={ '/home' } />)
     }
 
     return(
       <Fragment>
-        {!!notification && <p className={notificationType}>{notification}</p>}
+        {!!notification && <p className={ notificationType }>{ notification }</p>}
         <form className='ml'>
           <TextField 
             name='login'
             label='Login'
-            value={this.state.login}
+            value={ login }
             onChange={e => this.handleChangeInput(e)}
             margin="normal"
           />
@@ -73,8 +63,8 @@ export default class Form extends Component {
           <TextField 
             name='password'
             label='Password'
-            value={this.state.password}
-            onChange={e => this.handleChangeInput(e)}
+            value={ password }
+            onChange={e => this.handleChangeInput(e)} 
             margin="normal"
             type='password'
           />
@@ -83,7 +73,7 @@ export default class Form extends Component {
               label='Submit' 
               onClick={e => this.handleSubmit(e)} 
               color="primary"
-              disabled={!isLoginBtnActive}>
+              disabled={ !isLoginBtnActive }>
             Submit
           </Button>
         </form> 

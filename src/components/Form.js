@@ -25,21 +25,21 @@ export default class Form extends Component {
 		const { login, password } = this.state;
 		logIn({ login, password })
 								.then(result => {
-									this.setState({notification: result, notificationType: 'notification success' });
+									this.setState({ notification: result, notificationType: 'notification success' });
 									if(result) {
-										this.setState({redirect: true});
+										this.setState({ redirect: true });
 									}
 								})
 								.catch(error => {
 									this.setState({notification: error, notificationType: 'notification error' });
 								});
 
-		this.showNotification = (notification) => {
-			this.setState({notification});
+		this.showNotification = notification => {
+			this.setState({ notification });
 
 			setTimeout(() => {
-				this.setState({notification: null})
-			});
+				this.setState({ notification: null })
+			}, 5000);
 		}
 	}
 
@@ -55,12 +55,12 @@ export default class Form extends Component {
 
 		return(
 			<Fragment>
-				<p className={this.state.notificationType}>{this.state.notification}</p>
+				<p className={ this.state.notificationType}>{this.state.notification }</p>
 				<form className='ml'>
 					<TextField 
 						name='login'
 						label='Login'
-						value={this.state.login}
+						value={ login }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
@@ -68,7 +68,7 @@ export default class Form extends Component {
 					<TextField 
 						name='password'
 						label='Password'
-						value={this.state.password}
+						value={ password }
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 						type='password'
@@ -78,7 +78,7 @@ export default class Form extends Component {
 							label='Submit' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
-							disabled={!isLoginBtnActive}>
+							disabled={ !isLoginBtnActive }>
 						Submit
 					</Button>
 				</form>	
