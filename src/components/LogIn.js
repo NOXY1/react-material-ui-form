@@ -45,36 +45,34 @@ export default class Form extends Component {
     const isLoginBtnActive = !!(login && password);
 
     if(this.state.redirect) {
-      return (<Redirect to={ '/home' } />)
+      return (<Redirect to={'/home'} />)
     }
 
     return(
       <Fragment>
-        {!!notification && <p className={ notificationType }>{ notification }</p>}
+        {!!notification && <p className={notificationType}>{notification}</p>}
         <form className='ml'>
           <TextField 
             name='login'
             label='Login'
-            value={ login }
+            value={login}
             onChange={e => this.handleChangeInput(e)}
             margin="normal"
           />
-          <br />
           <TextField 
             name='password'
             label='Password'
-            value={ password }
+            value={password}
             onChange={e => this.handleChangeInput(e)} 
             margin="normal"
             type='password'
           />
-          <br />
           <Button variant='contained'
               label='Submit' 
               onClick={e => this.handleSubmit(e)} 
               color="primary"
-              disabled={ !isLoginBtnActive }>
-            Submit
+              disabled={!isLoginBtnActive}>
+            Log In
           </Button>
         </form> 
       </Fragment>

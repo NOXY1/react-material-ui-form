@@ -16,8 +16,13 @@ export default class SignUp extends Component {
 		birthday: '',
 		notification: '',
     	notificationType: '',
+    	checked: false,
 		redirect: false,
 	}
+
+	handleChange = e => {
+    	this.setState({ checked: e.target.checked });
+  	}
 
 	handleChangeInput = e => {
 		this.setState({[e.target.name]: e.target.value});
@@ -25,8 +30,8 @@ export default class SignUp extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { firstName, lastName, email, birthday } = this.state;
-		signUp({ firstName, lastName, email, birthday })
+		const { firstName, lastName, email, birthday, checked } = this.state;
+		signUp({ firstName, lastName, email, birthday, checked })
 								.then(result => {
 									if(result) {
 										this.setState({ redirect: true });
@@ -39,72 +44,67 @@ export default class SignUp extends Component {
 	}
 
 	showNotification = (notification, notificationType, time = 5000) => {
-	    this.setState({ notification: notification, notificationType: notificationType });
+	    this.setState({ notification, notificationType });
 	    setTimeout(() => {
 	      this.setState({ notification: null, notificationType: null });
 	    }, time);
   	}	
 
 	render() {
-		const { firstName, lastName, email, birthday, notification, notificationType } = this.state;
-		const isSignInBtnActive = !!(firstName && lastName && email && birthday);
+		const { firstName, lastName, email, birthday, notification, notificationType, checked } = this.state;
+		const isSignInBtnActive = !!(firstName && lastName && email && birthday && checked);
 		
 		if(this.state.redirect) {
-			return (<Redirect to={ '/home' } />)
+			return (<Redirect to={'/home'} />)
 		}
 
 		return(
 			<Fragment>
-			{!!notification && <p className={ notificationType }>{ notification }</p>}
+			{!!notification && <p className={notificationType}>{notification}</p>}
 				<form className='ml'>
 					<TextField 
 						name='firstName'
 						label='Name'
-						value={ firstName }
+						value={firstName}
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
-					<br />
 					<TextField 
 						name='lastName'
 						label='Surname'
-						value={ lastName }
+						value={lastName}
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
-					<br />
 					<TextField 
 						name='email'
 						label='Email'
-						value={ email }
+						value={email}
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
-					<br />
 					<TextField 
 						name='birthday'
 						label='Birthday'
-						value={ birthday }
+						value={birthday}
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
-					<br />
 					<FormControlLabel
 			          control={
 			            <Checkbox
-			              checked={ this.state.checkedB }
-			              value="checkedB"
+			              onChange={e => this.handleChange(e)}
+			              checked={checked}
 			              color="primary"
 			            />
 			          }
 			          label="I accept the terms of the license agreement"
 			        />
-			        <br />
 			        <Button variant='contained'
 							label='Sign Up' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
-							disabled = { !isSignInBtnActive }
+							disabled = {!isSignInBtnActive}
 							>
 						Sign In
 					</Button>

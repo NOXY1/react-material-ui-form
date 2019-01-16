@@ -27,3 +27,8 @@
 .ml {
 	margin-left: 10px;
 }
+
+form {
+	max-width: 250px;
+	text-align: left;
+}
