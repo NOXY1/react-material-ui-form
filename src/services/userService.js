@@ -10,9 +10,9 @@ export function logIn({ login = '', password = '' }) {
 	});
 };
 
-export function signUp({ firstName = '', lastName = '', email = '', birthday = '', checked }) {
+export function signUp({ firstName = '', lastName = '', email = '', birthday = '' }) {
 	return new Promise((resolve, reject) => {
-		if(firstName && lastName && email && birthday && checked) {
+		if(firstName && lastName && email && birthday) {
 			resolve('You have been successfully signed up');
 		} else {
 			reject('Sorry, something went wrong');

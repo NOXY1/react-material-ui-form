@@ -16,12 +16,12 @@ export default class SignUp extends Component {
 		birthday: '',
 		notification: '',
     	notificationType: '',
-    	checked: false,
+    	agreementChecked: false,
 		redirect: false,
 	}
 
 	handleChange = e => {
-    	this.setState({ checked: e.target.checked });
+    	this.setState({ agreementChecked: e.target.checked });
   	}
 
 	handleChangeInput = e => {
@@ -30,8 +30,8 @@ export default class SignUp extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { firstName, lastName, email, birthday, checked } = this.state;
-		signUp({ firstName, lastName, email, birthday, checked })
+		const { firstName, lastName, email, birthday, agreementChecked } = this.state;
+		signUp({ firstName, lastName, email, birthday })
 								.then(result => {
 									if(result) {
 										this.setState({ redirect: true });
@@ -51,8 +51,8 @@ export default class SignUp extends Component {
   	}	
 
 	render() {
-		const { firstName, lastName, email, birthday, notification, notificationType, checked } = this.state;
-		const isSignInBtnActive = !!(firstName && lastName && email && birthday && checked);
+		const { firstName, lastName, email, birthday, notification, notificationType, agreementChecked } = this.state;
+		const isSignInBtnActive = !!(firstName && lastName && email && birthday && agreementChecked);
 		
 		if(this.state.redirect) {
 			return (<Redirect to={'/home'} />)
@@ -94,7 +94,7 @@ export default class SignUp extends Component {
 			          control={
 			            <Checkbox
 			              onChange={e => this.handleChange(e)}
-			              checked={checked}
+			              checked={agreementChecked}
 			              color="primary"
 			            />
 			          }
