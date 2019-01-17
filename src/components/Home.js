@@ -1,16 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import '../App.css';
 
-
-
-class Home extends Component {
-	render() {
-		return (
-			<Fragment>
-				<h1 className='home'>Home</h1>
-			</Fragment>	
-		);
-	};
-};
+const Home = () => (<h1 className='home'>Home</h1>);
 
 export default Home;

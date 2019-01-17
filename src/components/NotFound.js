@@ -1,14 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 
-
-class NotFound extends Component {
-	render() {
-		return (
-			<Fragment>
-				<h1>404 page</h1>
-			</Fragment>	
-		);
-	};
-};
+const NotFound = () => (<h1>404 page</h1>);
 
 export default NotFound;

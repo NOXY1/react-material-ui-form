@@ -1,28 +1,81 @@
-import React, { Component, Fragment } from 'react';
-import Form from './Form';
+import React, { Fragment, Component } from 'react';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { logIn } from '../services/userService';
+import { Redirect } from 'react-router-dom';
+import '../App.css';
 
 
-class LogIn extends Component {
-	state = {
-    	fields: {}
-  	};
+export default class Form extends Component {
+  state = {
+    login: '',
+    password: '',
+    notification: '',
+    notificationType: '',
+    redirect: false
+  }
 
-  onChange = newValue => {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        ...newValue
-      }
-    });
-  };
+  handleChangeInput = e => {
+    this.setState({[e.target.name]: e.target.value});
+  }
 
-	render() {
-		return (
-			<Fragment>
-				<Form onChange={fields => this.onChange(fields)} />
-			</Fragment>	
-		);
-	};
-};
+  handleSubmit = e => {
+    e.preventDefault();
+    const { login, password } = this.state;
+    logIn({ login, password })
+                .then(result => {
+                  if(result) {
+                    this.setState({ redirect: true });
+                  }
+                })
+                .catch(error => {
+                  this.showNotification(error, 'notification error');
+                });
+  }
 
-export default LogIn;
+  showNotification = (notification, notificationType, time = 5000) => {
+    this.setState({ notification, notificationType });
+    setTimeout(() => {
+      this.setState({ notification: null, notificationType: null });
+    }, time);
+  }
+
+  render() {
+    const { login, password, notification, notificationType } = this.state;
+    const isLoginBtnActive = !!(login && password);
+
+    if(this.state.redirect) {
+      return (<Redirect to={'/home'} />)
+    }
+
+    return(
+      <Fragment>
+        {!!notification && <p className={notificationType}>{notification}</p>}
+        <form className='ml'>
+          <TextField 
+            name='login'
+            label='Login'
+            value={login}
+            onChange={e => this.handleChangeInput(e)}
+            margin="normal"
+          />
+          <TextField 
+            name='password'
+            label='Password'
+            value={password}
+            onChange={e => this.handleChangeInput(e)} 
+            margin="normal"
+            type='password'
+          />
+          <Button variant='contained'
+              label='Submit' 
+              onClick={e => this.handleSubmit(e)} 
+              color="primary"
+              disabled={!isLoginBtnActive}>
+            Log In
+          </Button>
+        </form> 
+      </Fragment>
+    );
+  }
+}
