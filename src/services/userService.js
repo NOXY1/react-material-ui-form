@@ -20,4 +20,3 @@ export function signUp({ firstName = '', lastName = '', email = '', birthday = '
 	});
 };
 
- 

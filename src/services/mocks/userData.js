@@ -1,4 +1,4 @@
-export const user = {
+ export const user = {
 	login: 'NOXY',
 	password: '123'
 };

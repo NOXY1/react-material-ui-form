@@ -24,7 +24,9 @@ export default class Form extends Component {
     const { login, password } = this.state;
     logIn({ login, password })
                 .then(result => {
+                  let userData = JSON.stringify({ login, password });
                   if(result) {
+                    localStorage.setItem('user', userData);
                     this.setState({ redirect: true });
                   }
                 })
@@ -48,6 +50,10 @@ export default class Form extends Component {
       return (<Redirect to={'/home'} />)
     }
 
+    if(localStorage.getItem('user')) {
+      return (<Redirect to={'/home'} />)
+    }
+
     return(
       <Fragment>
         {!!notification && <p className={notificationType}>{notification}</p>}
@@ -67,13 +73,16 @@ export default class Form extends Component {
             margin="normal"
             type='password'
           />
-          <Button variant='contained'
+          <div className='btn-group'>
+            <Button variant='contained'
               label='Submit' 
               onClick={e => this.handleSubmit(e)} 
               color="primary"
               disabled={!isLoginBtnActive}>
-            Log In
-          </Button>
+              Log In
+            </Button>
+            <a href='/signup' className='button'>Signup</a>
+          </div>
         </form> 
       </Fragment>
     );

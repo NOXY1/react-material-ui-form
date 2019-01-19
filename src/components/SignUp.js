@@ -15,8 +15,8 @@ export default class SignUp extends Component {
 		email: '',
 		birthday: '',
 		notification: '',
-    	notificationType: '',
-    	agreementChecked: false,
+  	notificationType: '',
+  	agreementChecked: false,
 		redirect: false,
 	}
 
@@ -30,10 +30,12 @@ export default class SignUp extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { firstName, lastName, email, birthday, agreementChecked } = this.state;
+		const { firstName, lastName, email, birthday } = this.state;
 		signUp({ firstName, lastName, email, birthday })
 								.then(result => {
+									let userObj = JSON.stringify({ firstName, lastName, email, birthday });
 									if(result) {
+										localStorage.setItem('user', userObj)
 										this.setState({ redirect: true });
 									}
 								})
@@ -43,11 +45,18 @@ export default class SignUp extends Component {
 								});
 	}
 
-	showNotification = (notification, notificationType, time = 5000) => {
+	redirectToLoginBtn = e => {
+		this.setState({ redirect: true });
+		if(this.state.redirect) {
+			return (<Redirect to={'/login'} />)
+		}
+	}
+
+	showNotification = (notification, notificationType) => {
 	    this.setState({ notification, notificationType });
 	    setTimeout(() => {
 	      this.setState({ notification: null, notificationType: null });
-	    }, time);
+	    }, 5000);
   	}	
 
 	render() {
@@ -55,6 +64,10 @@ export default class SignUp extends Component {
 		const isSignInBtnActive = !!(firstName && lastName && email && birthday && agreementChecked);
 		
 		if(this.state.redirect) {
+			return (<Redirect to={'/home'} />)
+		}
+
+		if(localStorage.getItem('user')) {
 			return (<Redirect to={'/home'} />)
 		}
 
@@ -99,15 +112,25 @@ export default class SignUp extends Component {
 			            />
 			          }
 			          label="I accept the terms of the license agreement"
-			        />
-			        <Button variant='contained'
+			    />
+			    <div className='btn-group'>
+			    	<Button variant='contained'
 							label='Sign Up' 
 							onClick={e => this.handleSubmit(e)} 
 							color="primary"
 							disabled = {!isSignInBtnActive}
 							>
-						Sign In
+						Signup
 					</Button>
+					<Button variant='contained'
+							label='Login' 
+							onClick={e => this.redirectToLoginBtn(e)} 
+							color="primary"
+							className='login-redirect'
+							>
+						Login
+					</Button>
+			    </div>
 				</form>	
 			</Fragment>
 		);
