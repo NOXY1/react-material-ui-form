@@ -1,8 +1,9 @@
-import { user } from './mocks/userData';
-
 export function logIn({ login = '', password = '' }) {
 	return new Promise((resolve, reject) => {
-		if(login === user.login && password === user.password) {
+		const parsedUserData = JSON.parse(localStorage.getItem('user'));
+		if(login === parsedUserData.email && password === parsedUserData.password) {
+			let userData = JSON.stringify({ login, password });
+			localStorage.setItem('authorizedUser', userData);
 			resolve('You have been successfully logged in');
 		} else {
 			reject('Sorry, something went wrong');
@@ -10,13 +11,17 @@ export function logIn({ login = '', password = '' }) {
 	});
 };
 
-export function signUp({ firstName = '', lastName = '', email = '', birthday = '' }) {
+export function signUp({ firstName = '', lastName = '', email = '', birthday = '', password = '' }) {
 	return new Promise((resolve, reject) => {
-		if(firstName && lastName && email && birthday) {
+		if(firstName && lastName && email && birthday && password) {
+			let userObj = JSON.stringify({ firstName, lastName, email, birthday , password });
+			localStorage.setItem('user', userObj);
 			resolve('You have been successfully signed up');
 		} else {
 			reject('Sorry, something went wrong');
 		}
 	});
 };
+
+
 

@@ -24,9 +24,7 @@ export default class Form extends Component {
     const { login, password } = this.state;
     logIn({ login, password })
                 .then(result => {
-                  let userData = JSON.stringify({ login, password });
                   if(result) {
-                    localStorage.setItem('user', userData);
                     this.setState({ redirect: true });
                   }
                 })
@@ -50,7 +48,7 @@ export default class Form extends Component {
       return (<Redirect to={'/home'} />)
     }
 
-    if(localStorage.getItem('user')) {
+    if(localStorage.getItem('authorizedUser')) {
       return (<Redirect to={'/home'} />)
     }
 
@@ -79,7 +77,7 @@ export default class Form extends Component {
               onClick={e => this.handleSubmit(e)} 
               color="primary"
               disabled={!isLoginBtnActive}>
-              Log In
+              LogIn
             </Button>
             <a href='/signup' className='button'>Signup</a>
           </div>

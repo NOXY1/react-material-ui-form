@@ -13,7 +13,7 @@ class Home extends Component {
 	}
 
 	componentWillMount = () =>  {
-		if(localStorage.getItem('user')) {
+		if(localStorage.getItem('authorizedUser')) {
 			console.log('userOk');
 		} else {
 			this.setState({redirect: true});
@@ -21,8 +21,7 @@ class Home extends Component {
 	}
 
 	logout = () => {
-		localStorage.setItem('user', '');
-		localStorage.clear();
+		localStorage.removeItem('authorizedUser');
 		this.setState({redirect: true});
 	}
 

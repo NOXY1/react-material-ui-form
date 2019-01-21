@@ -16,6 +16,7 @@ export default class SignUp extends Component {
 		birthday: '',
 		notification: '',
   	notificationType: '',
+  	password: '',
   	agreementChecked: false,
 		redirect: false,
 	}
@@ -30,12 +31,10 @@ export default class SignUp extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-		const { firstName, lastName, email, birthday } = this.state;
-		signUp({ firstName, lastName, email, birthday })
+		const { firstName, lastName, email, birthday, password } = this.state;
+		signUp({ firstName, lastName, email, birthday, password })
 								.then(result => {
-									let userObj = JSON.stringify({ firstName, lastName, email, birthday });
 									if(result) {
-										localStorage.setItem('user', userObj)
 										this.setState({ redirect: true });
 									}
 								})
@@ -60,14 +59,14 @@ export default class SignUp extends Component {
   	}	
 
 	render() {
-		const { firstName, lastName, email, birthday, notification, notificationType, agreementChecked } = this.state;
-		const isSignInBtnActive = !!(firstName && lastName && email && birthday && agreementChecked);
+		const { firstName, lastName, email, birthday, password, notification, notificationType, agreementChecked } = this.state;
+		const isSignInBtnActive = !!(firstName && lastName && email && birthday && password && agreementChecked);
 		
 		if(this.state.redirect) {
 			return (<Redirect to={'/home'} />)
 		}
 
-		if(localStorage.getItem('user')) {
+		if(localStorage.getItem('authorizedUser')) {
 			return (<Redirect to={'/home'} />)
 		}
 
@@ -103,6 +102,14 @@ export default class SignUp extends Component {
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
+					<TextField 
+            name='password'
+            label='Password'
+            value={password}
+            onChange={e => this.handleChangeInput(e)} 
+            margin="normal"
+            type='password'
+          />
 					<FormControlLabel
 			          control={
 			            <Checkbox
