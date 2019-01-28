@@ -29,7 +29,7 @@
 }
 
 form {
-	max-width: 200px;
+	max-width: 250px;
 	text-align: left;
 }
 
@@ -54,4 +54,13 @@ form {
 	display: -o-flex;
 	display: flex;
 	justify-content: space-between;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: underline;
 }

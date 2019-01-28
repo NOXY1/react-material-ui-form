@@ -33,22 +33,26 @@ export default class Form extends Component {
                 });
   }
 
-  showNotification = (notification, notificationType, time = 5000) => {
+  showNotification = (notification, notificationType) => {
     this.setState({ notification, notificationType });
     setTimeout(() => {
       this.setState({ notification: null, notificationType: null });
-    }, time);
+    }, 5000);
+  }
+
+  componentDidMount () {
+    const isUserLoggedIn = localStorage.getItem('authorizedUser');
+
+    if(isUserLoggedIn) {
+      return (<Redirect to={'/home'} />)
+    }
   }
 
   render() {
     const { login, password, notification, notificationType } = this.state;
     const isLoginBtnActive = !!(login && password);
-
+    
     if(this.state.redirect) {
-      return (<Redirect to={'/home'} />)
-    }
-
-    if(localStorage.getItem('authorizedUser')) {
       return (<Redirect to={'/home'} />)
     }
 
@@ -79,7 +83,7 @@ export default class Form extends Component {
               disabled={!isLoginBtnActive}>
               LogIn
             </Button>
-            <a href='/signup' className='button'>Signup</a>
+            <a href='/signup'>Don't have an account?</a>
           </div>
         </form> 
       </Fragment>

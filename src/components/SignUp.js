@@ -46,9 +46,7 @@ export default class SignUp extends Component {
 
 	redirectToLoginBtn = e => {
 		this.setState({ redirect: true });
-		if(this.state.redirect) {
-			return (<Redirect to={'/login'} />)
-		}
+		return (<Redirect to={'/login'} />)
 	}
 
 	showNotification = (notification, notificationType) => {
@@ -60,13 +58,14 @@ export default class SignUp extends Component {
 
 	render() {
 		const { firstName, lastName, email, birthday, password, notification, notificationType, agreementChecked } = this.state;
-		const isSignInBtnActive = !!(firstName && lastName && email && birthday && password && agreementChecked);
-		
+		const isSignInBtnActive = !!(firstName && lastName && email && password && agreementChecked);
+		const isUserLoggedIn = localStorage.getItem('authorizedUser');
+
 		if(this.state.redirect) {
 			return (<Redirect to={'/home'} />)
 		}
 
-		if(localStorage.getItem('authorizedUser')) {
+		if(isUserLoggedIn) {
 			return (<Redirect to={'/home'} />)
 		}
 

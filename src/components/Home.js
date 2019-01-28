@@ -1,18 +1,15 @@
 import React, { Fragment, Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import { logout } from '../services/userService';
 import '../App.css';
 
 class Home extends Component {
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			redirect: false,
-		}
+	state = {
+		redirect: false,
 	}
 
-	componentWillMount = () =>  {
+	componentDidMount = () =>  {
 		if(localStorage.getItem('authorizedUser')) {
 			console.log('userOk');
 		} else {
@@ -20,8 +17,8 @@ class Home extends Component {
 		}
 	}
 
-	logout = () => {
-		localStorage.removeItem('authorizedUser');
+	logoutUser = () => {
+		logout();
 		this.setState({redirect: true});
 	}
 
@@ -36,7 +33,7 @@ class Home extends Component {
 				<h1 className='home'>Home</h1>
 				<Button variant='contained'
 						label='Logout' 
-						onClick={this.logout} 
+						onClick={this.logoutUser} 
 						color="primary"
 						>
 						Logout
