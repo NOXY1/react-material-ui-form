@@ -10,11 +10,11 @@ import Welcome from './components/Welcome';
 const Routes = () => (
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component={ Welcome } />
-			<Route path='/login' component={ Login } />
-			<Route path='/home' component={ Home } />
-			<Route path='/signup' component={ SignUp } />
-			<Route path='*' component={ NotFound } />
+			<Route exact path='/' component={Welcome} />
+			<Route path='/login' component={Login} />
+			<Route path='/home' component={Home} />
+			<Route path='/signup' component={SignUp} />
+			<Route path='*' component={NotFound} />
 		</Switch>
 	</BrowserRouter>
 );

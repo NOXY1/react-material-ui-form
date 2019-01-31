@@ -5,7 +5,6 @@ import { logIn } from '../services/userService';
 import { Redirect } from 'react-router-dom';
 import '../App.css';
 
-
 export default class Form extends Component {
   state = {
     login: '',

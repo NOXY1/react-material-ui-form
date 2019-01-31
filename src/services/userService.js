@@ -14,7 +14,7 @@ export function logIn({ login = '', password = '' }) {
 			reject('Sorry, something went wrong');
 		}
 	});
-};
+}
 
 export function signUp({ firstName = '', lastName = '', email = '', password = '' }) {
 	return new Promise((resolve, reject) => {
@@ -27,8 +27,8 @@ export function signUp({ firstName = '', lastName = '', email = '', password = '
 			reject('Sorry, something went wrong');
 		}
 	});
-};
+}
 
 export function logout() {
 	localStorage.removeItem('authorizedUser');
-};
+}

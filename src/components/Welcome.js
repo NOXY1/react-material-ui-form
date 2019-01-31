@@ -8,7 +8,7 @@ const Welcome = () => {
 			<a href='/login' className='button'>Login</a>
 			<a href='/signup' className='button'>Signup</a>
 		</div>
-	)
+	);
 };
 
 export default Welcome;

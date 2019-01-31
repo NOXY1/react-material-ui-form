@@ -64,3 +64,10 @@ a {
 a:hover {
 	text-decoration: underline;
 }
+
+.error-msg {
+	color:  red;
+	padding: 0;
+	margin: 0;
+	font-size: 13px;
+}

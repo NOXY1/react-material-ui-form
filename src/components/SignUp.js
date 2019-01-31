@@ -11,12 +11,16 @@ import '../App.css';
 export default class SignUp extends Component {
 	state = {
 		firstName: '',
+		firstNameError: '',
 		lastName: '',
+		lastNameError: '',
 		email: '',
+		emailError: '',
 		birthday: '',
+		password: '',
+		passwordError: '',
 		notification: '',
   	notificationType: '',
-  	password: '',
   	agreementChecked: false,
 		redirect: false,
 	}
@@ -29,10 +33,50 @@ export default class SignUp extends Component {
 		this.setState({[e.target.name]: e.target.value});
 	}
 
+	validate = () => {
+		let isError = false;
+		const errors = {
+			firstNameError: '',
+			lastNameError: '',
+			emailError: '',
+			passwordError: '',
+		};
+
+		if(this.state.firstName.length < 3) {
+			isError = true;
+			errors.firstNameError = '* Must contain at least 4 characters';
+		}
+
+		if(this.state.lastName.length < 3) {
+			isError = true;
+			errors.lastNameError = '* Must contain at least 4 characters';
+		}
+
+		if (this.state.email.indexOf("@") === -1) {
+      isError = true;
+      errors.emailError = "* Requires valid email";
+    }
+
+    if(this.state.password.length < 2) {
+			isError = true;
+			errors.passwordError = '* Password is required';
+		}
+
+		this.setState({
+			...errors
+		});
+		
+
+		return isError;
+	}
+
 	handleSubmit = e => {
 		e.preventDefault();
-		const { firstName, lastName, email, birthday, password } = this.state;
-		signUp({ firstName, lastName, email, birthday, password })
+		const err = this.validate();
+
+		if(!err) {
+			const { firstName, lastName, email, birthday, password } = this.state;
+			signUp({ firstName, lastName, email, birthday, password })
 								.then(result => {
 									if(result) {
 										this.setState({ redirect: true });
@@ -42,6 +86,7 @@ export default class SignUp extends Component {
 									this.showNotification(error, 'notification error');
 									console.log(error)
 								});
+		}
 	}
 
 	redirectToLoginBtn = e => {
@@ -50,14 +95,15 @@ export default class SignUp extends Component {
 	}
 
 	showNotification = (notification, notificationType) => {
-	    this.setState({ notification, notificationType });
-	    setTimeout(() => {
-	      this.setState({ notification: null, notificationType: null });
-	    }, 5000);
-  	}	
+    this.setState({ notification, notificationType });
+    setTimeout(() => {
+      this.setState({ notification: null, notificationType: null });
+    }, 5000);
+	}	
 
 	render() {
 		const { firstName, lastName, email, birthday, password, notification, notificationType, agreementChecked } = this.state;
+		const { firstNameError, lastNameError, emailError, passwordError } = this.state;
 		const isSignInBtnActive = !!(firstName && lastName && email && password && agreementChecked);
 		const isUserLoggedIn = localStorage.getItem('authorizedUser');
 
@@ -80,6 +126,7 @@ export default class SignUp extends Component {
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
+					<p className='error-msg'>{ firstNameError }</p>
 					<TextField 
 						name='lastName'
 						label='Surname'
@@ -87,6 +134,7 @@ export default class SignUp extends Component {
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
+					<p className='error-msg'>{ lastNameError }</p>
 					<TextField 
 						name='email'
 						label='Email'
@@ -94,6 +142,7 @@ export default class SignUp extends Component {
 						onChange={e => this.handleChangeInput(e)}
 						margin="normal"
 					/>
+					<p className='error-msg'>{ emailError }</p>
 					<TextField 
 						name='birthday'
 						label='Birthday'
@@ -105,10 +154,11 @@ export default class SignUp extends Component {
             name='password'
             label='Password'
             value={password}
-            onChange={e => this.handleChangeInput(e)} 
+            onChange={e => this.handleChangeInput(e)}
             margin="normal"
             type='password'
           />
+          <p className='error-msg'>{ passwordError }</p>
 					<FormControlLabel
 			          control={
 			            <Checkbox
